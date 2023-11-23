@@ -5,12 +5,15 @@ import axios from "axios";
 const bot = new TelegramBot(TELEGRAM_BOT, { polling: true });
 
 const help = `
-/hi - Say hello to bot
-/weather - Weather in Yaounde`;
+/start - 😊 Welcome
+/hi - 👋  Say hello to bot
+/help -🐰 Help section
+/weather - 🌦️ Weather in Yaounde`;
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
-  bot.sendMessage(chatId, "Welcome to your Telegram bot!");
+  const welcomeMessage = `Welcome to your Telegram bot! 🌟 How can I assist you today?`;
+  bot.sendMessage(chatId, welcomeMessage);
 });
 
 bot.onText(/\/hi/, (msg) => {
@@ -23,22 +26,6 @@ bot.onText(/\/help/, (msg) => {
   bot.sendMessage(chatId, help);
 });
 
-bot.onText(/\/dog/, async (msg) => {
-  const chatId = msg.chat.id;
-
-  try {
-    const response = await axios.get("https://dog.ceo/api/breeds/image/random");
-    const imageUrl = response.data.message;
-    bot.sendPhoto(chatId, imageUrl);
-  } catch (error) {
-    console.error("Error fetching dog picture:", error.message);
-    bot.sendMessage(
-      chatId,
-      "Sorry, an error occurred while fetching the dog picture."
-    );
-  }
-});
-
 bot.onText(/\/weather/, async (msg) => {
   const chatId = msg.chat.id;
   const city = msg.text.split(" ")[1] ? msg.text.split(" ")[1] : "yaounde";
@@ -47,7 +34,11 @@ bot.onText(/\/weather/, async (msg) => {
   );
   try {
     const data =
-      "City: " + response.data.name + "Temp: " + response.data.main.temp;
+      "City: " +
+      response.data.name +
+      "\nTemperature: " +
+      response.data.main.temp +
+      " °C";
     bot.sendMessage(chatId, data);
   } catch (error) {
     console.error("Error fetching dog picture:", error.message);
