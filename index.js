@@ -1,5 +1,5 @@
 import TelegramBot from "node-telegram-bot-api";
-import { TELEGRAM_BOT } from "./shared/core/config.js";
+import { TELEGRAM_BOT, WEATHER_BOT } from "./shared/core/config.js";
 import axios from "axios";
 
 const bot = new TelegramBot(TELEGRAM_BOT, { polling: true });
