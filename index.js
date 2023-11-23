@@ -47,7 +47,7 @@ bot.onText(/\/weather/, async (msg) => {
       `https://api.openweathermap.org/data/2.5/weather?q=mokolo&appid=5e9699131a1fa6d7a82f824d8a6e8c7f&units=metric`
     );
     const message = `City: ${response.data.name}\nTemperature: ${response.data.main.temp}`;
-    bot.sendMessage(chatId, response.data.main.temp);
+    bot.sendMessage(chatId, response.data.name);
   } catch (error) {
     console.error("Error fetching dog picture:", error.message);
     bot.sendMessage(
