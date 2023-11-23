@@ -1,0 +1,19 @@
+{
+  "name": "weather-boot",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "serve": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "dotenv": "^16.3.1",
+    "node-telegram-bot-api": "^0.64.0",
+    "nodemon": "^3.0.1"
+  }
+}
