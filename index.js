@@ -8,6 +8,27 @@ const help = `
 /hi - Say hello to bot
 /weather - Weather in Yaounde`;
 
+bot.onText(/\/start/, (msg) => {
+  const chatId = msg.chat.id;
+  bot.sendMessage(chatId, "Welcome to your Telegram bot!");
+});
+
+bot.onText(/\/dog/, async (msg) => {
+  const chatId = msg.chat.id;
+
+  try {
+    const response = await axios.get("https://dog.ceo/api/breeds/image/random");
+    const imageUrl = response.data.message;
+    bot.sendPhoto(chatId, imageUrl);
+  } catch (error) {
+    console.error("Error fetching dog picture:", error.message);
+    bot.sendMessage(
+      chatId,
+      "Sorry, an error occurred while fetching the dog picture."
+    );
+  }
+});
+
 bot.onText(/\/hi/, (msg) => {
   const chatId = msg.chat.id;
   bot.sendMessage(chatId, `Hi, ${msg.from.first_name}`);
