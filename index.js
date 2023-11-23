@@ -13,6 +13,16 @@ bot.onText(/\/start/, (msg) => {
   bot.sendMessage(chatId, "Welcome to your Telegram bot!");
 });
 
+bot.onText(/\/hi/, (msg) => {
+  const chatId = msg.chat.id;
+  bot.sendMessage(chatId, `Hi, ${msg.from.first_name}`);
+});
+
+bot.onText(/\/help/, (msg) => {
+  const chatId = msg.chat.id;
+  bot.sendMessage(chatId, help);
+});
+
 bot.onText(/\/dog/, async (msg) => {
   const chatId = msg.chat.id;
 
@@ -29,26 +39,18 @@ bot.onText(/\/dog/, async (msg) => {
   }
 });
 
-bot.onText(/\/hi/, (msg) => {
+bot.onText(/\/weather/, async (msg) => {
   const chatId = msg.chat.id;
-  bot.sendMessage(chatId, `Hi, ${msg.from.first_name}`);
-});
-
-bot.onText(/\/help/, (msg) => {
-  const chatId = msg.chat.id;
-  bot.sendMessage(chatId, help);
-});
-
-bot.onText(/\/weather/, (msg) => {
-  const chatId = msg.chat.id;
-  axios
-    .get(
+  try {
+    const response = await axios.get(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_BOT}&units=metric`
-    )
-    .then((response) => {
-      bot.sendMessage(chatId, response.data);
-    })
-    .catch((error) => {
-      bot.sendMessage(chatId, error);
-    });
+    );
+    bot.sendPhoto(chatId, response.data);
+  } catch (error) {
+    console.error("Error fetching dog picture:", error.message);
+    bot.sendMessage(
+      chatId,
+      "Sorry, an error occurred while fetching the dog picture."
+    );
+  }
 });
