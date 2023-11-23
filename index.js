@@ -4,10 +4,6 @@ import axios from "axios";
 
 const bot = new TelegramBot(TELEGRAM_BOT, { polling: true });
 
-const getWeather = async () => {
-    .catch(console.error);
-};
-
 const help = `
 /hi - Say hello to bot
 /weather - Weather in Yaounde`;
