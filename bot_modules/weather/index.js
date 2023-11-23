@@ -11,8 +11,8 @@ const weather = () => {
     .then((response) => {
       let weather = response.data;
       console.log("Weather ----->>>>>>", weather);
-      let data = `Weather`;
-      // let data = `Weather in ${weather.location.name}:\Temperature: ${weather.current.temp_c} C (чувст. как ${weather.current.feelslike_c} C)\nВетер: ${weather.current.wind_kph} км/час\nВлажность: ${weather.current.humidity}%\nОблачность: ${weather.current.cloud}%\nДата обновления: ${weather.current.last_updated}`;
+      // let data = `Weather`;
+      let data = `Weather in ${weather.location.name}:\Temperature: ${weather.current.temp_c} C (чувст. как ${weather.current.feelslike_c} C)\nВетер: ${weather.current.wind_kph} км/час\nВлажность: ${weather.current.humidity}%\nОблачность: ${weather.current.cloud}%\nДата обновления: ${weather.current.last_updated}`;
       return data;
     })
     .catch((error) => {
