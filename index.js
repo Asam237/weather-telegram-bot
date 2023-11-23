@@ -43,9 +43,10 @@ bot.onText(/\/weather/, async (msg) => {
   const chatId = msg.chat.id;
   try {
     const response = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=mokolo&appid=5e9699131a1fa6d7a82f824d8a6e8c7f&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_BOT}&units=metric`
     );
-    bot.sendMessage(chatId, response.data.name);
+    const message = `City: ${response.data.name}\nTemperature: ${response.data.main.temp}`;
+    bot.sendMessage(chatId, message);
   } catch (error) {
     console.error("Error fetching dog picture:", error.message);
     bot.sendMessage(
