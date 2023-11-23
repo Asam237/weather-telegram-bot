@@ -44,7 +44,7 @@ bot.onText(/\/weather/, async (msg) => {
   try {
     city = (msg.text.split(' ')[1]) ? msg.text.split(' ')[1] : 'Yaounde';
     const response = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_BOT}&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?q=yaounde&appid=${WEATHER_BOT}&units=metric`
     );
     const message = `City: ${response.data.name}\nTemperature: ${response.data.main.temp}`;
     bot.sendMessage(chatId, response.data.main.temp);
