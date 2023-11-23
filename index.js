@@ -41,11 +41,15 @@ bot.onText(/\/dog/, async (msg) => {
 
 bot.onText(/\/weather/, async (msg) => {
   const chatId = msg.chat.id;
-  city = msg.text.split(" ")[1] ?? "yaounde";
+  city = msg.text.split(" ")[1];
   try {
-    const response = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_BOT}&units=metric`
-    );
+    if (city) {
+      const response = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_BOT}&units=metric`
+      );
+    } else {
+      `https://api.openweathermap.org/data/2.5/weather?q=yaounde&appid=${WEATHER_BOT}&units=metric`;
+    }
     bot.sendMessage(chatId, response.data.name);
   } catch (error) {
     console.error("Error fetching dog picture:", error.message);
