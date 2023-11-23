@@ -50,7 +50,8 @@ bot.onText(/\/weather/, async (msg) => {
     } else {
       `https://api.openweathermap.org/data/2.5/weather?q=yaounde&appid=${WEATHER_BOT}&units=metric`;
     }
-    bot.sendMessage(chatId, response.data.name);
+    const data = response.data.name;
+    bot.sendMessage(chatId, data);
   } catch (error) {
     console.error("Error fetching dog picture:", error.message);
     bot.sendMessage(
