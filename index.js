@@ -5,20 +5,13 @@ import axios from "axios";
 const bot = new TelegramBot(TELEGRAM_BOT, { polling: true });
 
 const help = `
-/start - 😊 Welcome
 /hi - 👋  Say hello to bot
 /help -🐰 Help section
 /weather - 🌦️ Weather in Yaounde`;
 
-bot.onText(/\/start/, (msg) => {
-  const chatId = msg.chat.id;
-  const welcomeMessage = `Welcome to your Telegram bot! 🌟 How can I assist you today?`;
-  bot.sendMessage(chatId, welcomeMessage);
-});
-
 bot.onText(/\/hi/, (msg) => {
   const chatId = msg.chat.id;
-  bot.sendMessage(chatId, `Hi, ${msg.from.first_name}`);
+  bot.sendMessage(chatId, `Welcome to your Telegram bot 😊, ${msg.from.first_name}`);
 });
 
 bot.onText(/\/help/, (msg) => {
