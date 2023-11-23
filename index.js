@@ -48,7 +48,7 @@ bot.onText(/\/weather/, async (msg) => {
     const response = await axios.get(
       `https://api.openweathermap.org/data/2.5/weather?q=mokolo&appid=${WEATHER_BOT}&units=metric`
     );
-    bot.sendMessage(chatId, response.data.name);
+    bot.sendMessage(chatId, msg.text.split(" ")[1]);
   } catch (error) {
     console.error("Error fetching dog picture:", error.message);
     bot.sendMessage(
