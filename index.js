@@ -41,17 +41,11 @@ bot.onText(/\/dog/, async (msg) => {
 
 bot.onText(/\/weather/, async (msg) => {
   const chatId = msg.chat.id;
-  const city = msg.text.split(" ")[1];
+  const city = msg.text.split(" ")[1] ? msg.text.split(" ")[1] : "yaounde";
+  const response = await axios.get(
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_BOT}&units=metric`
+  );
   try {
-    if (city) {
-      const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_BOT}&units=metric`
-      );
-    } else {
-      const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=yaounde&appid=${WEATHER_BOT}&units=metric`
-      );
-    }
     const data = response.data.name;
     bot.sendMessage(chatId, data);
   } catch (error) {
