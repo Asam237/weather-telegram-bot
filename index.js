@@ -5,14 +5,6 @@ import axios from "axios";
 const bot = new TelegramBot(TELEGRAM_BOT, { polling: true });
 
 const getWeather = async () => {
-  const AxiosInstance = axios.create();
-  await AxiosInstance.get(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_BOT}&units=metric`
-  )
-    .then((response) => {
-      console.log("Response ->", response.data);
-      return response.data;
-    })
     .catch(console.error);
 };
 
@@ -32,6 +24,13 @@ bot.onText(/\/help/, (msg) => {
 
 bot.onText(/\/weather/, (msg) => {
   const chatId = msg.chat.id;
-  city = msg.text.split(" ")[1] ? msg.text.split(" ")[1] : "Yaounde";
-  bot.sendMessage(chatId, bot.sendMessage(chatId, getWeather()));
+  try {
+  const response = await axios.get(
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_BOT}&units=metric`
+  )
+  bot.sendMessage(chatId, response.data)
+  } catch (error) {
+    console.error('Error fetching:', error);
+    bot.sendMessage(chatId, 'Sorry, an error occurred while fetching.');
+  }
 });
