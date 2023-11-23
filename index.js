@@ -46,7 +46,8 @@ bot.onText(/\/weather/, async (msg) => {
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_BOT}&units=metric`
   );
   try {
-    const data = response.data.name;
+    const data =
+      "City: " + response.data.name + "Temp: " + response.data.main.temp;
     bot.sendMessage(chatId, data);
   } catch (error) {
     console.error("Error fetching dog picture:", error.message);
