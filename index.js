@@ -48,7 +48,9 @@ bot.onText(/\/weather/, async (msg) => {
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_BOT}&units=metric`
       );
     } else {
-      `https://api.openweathermap.org/data/2.5/weather?q=yaounde&appid=${WEATHER_BOT}&units=metric`;
+      const response = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=yaounde&appid=${WEATHER_BOT}&units=metric`
+      );
     }
     const data = response.data.name;
     bot.sendMessage(chatId, data);
