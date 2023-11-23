@@ -15,11 +15,11 @@ bot.onText(/\/hi/, (msg) => {
 //   bot.sendMessage(chatId, help.info);
 // });
 
-// bot.onText(/\/weather/, (msg) => {
-//   const chatId = msg.chat.id;
-//   city = msg.text.split(" ")[1] ? msg.text.split(" ")[1] : "Yaounde";
-//   bot.sendMessage(
-//     chatId,
-//     weather.then((weather) => bot.sendMessage(chatId, weather))
-//   );
-// });
+bot.onText(/\/weather/, (msg) => {
+  const chatId = msg.chat.id;
+  city = msg.text.split(" ")[1] ? msg.text.split(" ")[1] : "Yaounde";
+  bot.sendMessage(
+    chatId,
+    weather.then((weather) => bot.sendMessage(chatId, weather))
+  );
+});
