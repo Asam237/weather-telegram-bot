@@ -41,7 +41,7 @@ bot.onText(/\/dog/, async (msg) => {
 
 bot.onText(/\/weather/, async (msg) => {
   const chatId = msg.chat.id;
-  city = msg.text.split(" ")[1];
+  const city = msg.text.split(" ")[1];
   try {
     if (city) {
       const response = await axios.get(
