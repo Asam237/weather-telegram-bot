@@ -18,15 +18,16 @@ bot.onText(/\/help/, (msg) => {
   bot.sendMessage(chatId, help);
 });
 
-bot.onText(/\/weather/, async (msg) => {
+bot.onText(/\/weather/, (msg) => {
   const chatId = msg.chat.id;
-  try {
-    const response = await axios.get(
+  axios
+    .get(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_BOT}&units=metric`
-    );
-    bot.sendMessage(chatId, response.data);
-  } catch (error) {
-    console.error("Error fetching:", error);
-    bot.sendMessage(chatId, "Sorry, an error occurred while fetching.");
-  }
+    )
+    .then((response) => {
+      bot.sendMessage(chatId, response.data);
+    })
+    .catch((error) => {
+      bot.sendMessage(chatId, error);
+    });
 });
