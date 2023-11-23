@@ -41,12 +41,11 @@ bot.onText(/\/dog/, async (msg) => {
 
 bot.onText(/\/weather/, async (msg) => {
   const chatId = msg.chat.id;
-  city = msg.text.split(" ")[1] ? msg.text.split(" ")[1] : "Yaounde";
+  city = (msg.text.split(' ')[1]) ? msg.text.split(' ')[1] : 'Yaounde';
+  console.log("CITY --->", city);
   try {
     const response = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${
-        msg.text.split(" ")[1] ? msg.text.split(" ")[1] : "yaounde"
-      }&appid=${WEATHER_BOT}&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?q=mokolo&appid=${WEATHER_BOT}&units=metric`
     );
     bot.sendMessage(chatId, response.data.name);
   } catch (error) {
