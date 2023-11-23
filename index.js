@@ -43,6 +43,7 @@ bot.onText(/\/weather/, async (msg) => {
   const chatId = msg.chat.id;
   // city = (msg.text.split(' ')[1]) ? msg.text.split(' ')[1] : 'Yaounde';
   // console.log("CITY --->", city);
+  console.log("CITY -->", msg.text.split(" ")[1]);
   try {
     const response = await axios.get(
       `https://api.openweathermap.org/data/2.5/weather?q=mokolo&appid=${WEATHER_BOT}&units=metric`
