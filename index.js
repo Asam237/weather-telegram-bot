@@ -1,43 +1,52 @@
-import TelegramBot from "node-telegram-bot-api";
 import { TELEGRAM_BOT, WEATHER_BOT } from "./shared/core/config.js";
-import axios from "axios";
+import { Telegraf } from "telegraf";
+import fetch from "node-fetch";
 
-const bot = new TelegramBot(TELEGRAM_BOT, { polling: true });
+const bot = new Telegraf(TELEGRAM_BOT);
+const apiKey = WEATHER_BOT;
 
-const help = `
-/start - 👋  Start to bot
-/help -🐰 Help section
-/weather - 🌦️ Weather in Yaounde`;
+bot.start((ctx) =>
+  ctx.reply(
+    "Welcome! Send me a location (city name) to get the current weather."
+  )
+);
 
-bot.onText(/\/start/, (msg) => {
-  const chatId = msg.chat.id;
-  bot.sendMessage(chatId, `Welcome to your Telegram bot ${msg.from.first_name} 😊\nType /help to explore the various options.`);
-});
+bot.on("text", async (ctx) => {
+  const location = ctx.message.text;
+  const weatherData = await getWeatherData(location);
 
-bot.onText(/\/help/, (msg) => {
-  const chatId = msg.chat.id;
-  bot.sendMessage(chatId, help);
-});
-
-bot.onText(/\/weather/, async (msg) => {
-  const chatId = msg.chat.id;
-  const city = msg.text.split(" ")[1] ? msg.text.split(" ")[1] : "yaounde";
-  const response = await axios.get(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_BOT}&units=metric`
-  );
-  try {
-    const data =
-      "City: " +
-      response.data.name +
-      "\nTemperature: " +
-      response.data.main.temp +
-      " °C";
-    bot.sendMessage(chatId, data);
-  } catch (error) {
-    console.error("Error fetching dog picture:", error.message);
-    bot.sendMessage(
-      chatId,
-      "Sorry, an error occurred while fetching the dog picture."
+  if (weatherData) {
+    const message = formatWeatherMessage(weatherData);
+    ctx.reply(message);
+  } else {
+    ctx.reply(
+      "Sorry, I couldn't retrieve the weather information for that location."
     );
   }
 });
+
+const getWeatherData = async (location) => {
+  try {
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
+        location
+      )}&appid=${apiKey}&units=metric`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching weather data:", error);
+    return null;
+  }
+};
+
+const formatWeatherMessage = (weatherData) => {
+  const { name, main, weather } = weatherData;
+  const temperature = main.temp;
+  const description = weather[0].description;
+  return `Current weather in ${name}:
+  Temperature: ${temperature}°C
+  Description: ${description}`;
+};
+
+bot.launch();
