@@ -17,6 +17,61 @@ bot.onText(/\/start/, (msg) => {
   );
 });
 
+bot.onText(/\/todo/, (msg) => {
+  const chatId = msg.chat.id;
+  const welcomeMessage = `Welcome to the To-Do List Bot! 
+  To add a task, use the /add command. 
+  To view your tasks, use the /tasks command. 
+  To remove a task, use the /remove command.`;
+
+  bot.sendMessage(chatId, welcomeMessage);
+});
+
+bot.onText(/\/add (.+)/, (msg, match) => {
+  const chatId = msg.chat.id;
+  const task = match[1];
+
+  if (!tasks.has(chatId)) {
+    tasks.set(chatId, []);
+  }
+
+  tasks.get(chatId).push(task);
+
+  bot.sendMessage(chatId, `Task "${task}" added successfully!`);
+});
+
+// Handle /tasks command
+bot.onText(/\/tasks/, (msg) => {
+  const chatId = msg.chat.id;
+
+  if (!tasks.has(chatId) || tasks.get(chatId).length === 0) {
+    bot.sendMessage(chatId, 'You have no tasks.');
+  } else {
+    const taskList = tasks.get(chatId).join('\n');
+    bot.sendMessage(chatId, `Your tasks:\n${taskList}`);
+  }
+});
+
+// Handle /remove command
+bot.onText(/\/remove (.+)/, (msg, match) => {
+  const chatId = msg.chat.id;
+  const taskToRemove = match[1];
+
+  if (!tasks.has(chatId) || tasks.get(chatId).length === 0) {
+    bot.sendMessage(chatId, 'You have no tasks to remove.');
+  } else {
+    const taskIndex = tasks.get(chatId).indexOf(taskToRemove);
+
+    if (taskIndex !== -1) {
+      tasks.get(chatId).splice(taskIndex, 1);
+      bot.sendMessage(chatId, `Task "${taskToRemove}" removed successfully!`);
+    } else {
+      bot.sendMessage(chatId, `Task "${taskToRemove}" not found.`);
+    }
+  }
+});
+
+
 bot.onText(/\/help/, (msg) => {
   const chatId = msg.chat.id;
   bot.sendMessage(chatId, help);
