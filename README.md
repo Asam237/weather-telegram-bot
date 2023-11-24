@@ -1,4 +1,7 @@
-# Weather bot on Telegram using the OpenWeatherMap API.
+# Weather bot on Telegram using the OpenWeatherMap API.                                                  
 
-## Demo                                                                                                                                                                                                                                                    https://github.com/Asam237/weather-telegram-bot/assets/34966088/c2e33793-39b6-4baf-9cc9-09f8ff3c5826
+### Demo  
+                                                                                                                           
+
+https://github.com/Asam237/weather-telegram-bot/assets/34966088/87926608-93e4-41ca-865e-559cb6738afd
 
