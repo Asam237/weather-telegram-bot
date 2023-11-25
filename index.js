@@ -1,6 +1,6 @@
 import TelegramBot from "node-telegram-bot-api";
 import { TELEGRAM_BOT, WEATHER_BOT } from "./shared/core/config.js";
-import lyricsSearcher from "lyrics-searcher";
+import lyricsFinder from 'lyrics-finder';
 import axios from "axios";
 
 const bot = new TelegramBot(TELEGRAM_BOT, { polling: true });
@@ -40,7 +40,7 @@ bot.onText(/\/weather/, async (msg) => {
       response.data.weather[0].description;
     bot.sendMessage(chatId, data);
   } catch (error) {
-    console.error("Error fetching dog picture:", error.message);
+    console.error("Error fetching:", error.message);
     bot.sendMessage(
       chatId,
       "Sorry, an error occurred while fetching the dog picture."
@@ -51,10 +51,9 @@ bot.onText(/\/weather/, async (msg) => {
 bot.onText(/\/lyrics (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const songName = match[1];
-  const songTitle = match[2];
 
   try {
-    const lyrics = await getLyrics(songName, songTitle);
+    const lyrics = await getLyrics(songName);
     if (lyrics) {
       bot.sendMessage(chatId, `Lyrics for "${songName}":\n${lyrics}`);
     } else {
@@ -66,14 +65,12 @@ bot.onText(/\/lyrics (.+)/, async (msg, match) => {
   }
 });
 
-const getLyrics = async (songName, songTitle) => {
-  const lyrics = await lyricsSearcher(songName, songTitle)
-    .then((lyrics) => {
-      console.log(lyrics);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-
-  return lyrics;
+const getLyrics = async (songName) => {
+  try {
+    const lyrics = await lyricsFinder(songName);
+    return lyrics;
+  } catch (error) {
+    console.error("Error fetching lyrics:", error);
+    throw error; // Propagate the error
+  }
 };
