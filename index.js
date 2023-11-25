@@ -43,7 +43,7 @@ bot.onText(/\/weather/, async (msg) => {
     console.error("Error fetching:", error.message);
     bot.sendMessage(
       chatId,
-      "Sorry, an error occurred while fetching the dog picture."
+      "Sorry, an error occurred while fetching."
     );
   }
 });
