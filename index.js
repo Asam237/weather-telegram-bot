@@ -47,12 +47,3 @@ bot.onText(/\/weather/, async (msg) => {
   }
 });
 
-const getLyrics = async (songName) => {
-  try {
-    const lyrics = await lyricsFinder(songName);
-    return lyrics;
-  } catch (error) {
-    console.error("Error fetching lyrics:", error);
-    throw error; // Propagate the error
-  }
-};
