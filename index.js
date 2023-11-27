@@ -47,23 +47,6 @@ bot.onText(/\/weather/, async (msg) => {
   }
 });
 
-bot.onText(/\/lyrics (.+)/, async (msg, match) => {
-  const chatId = msg.chat.id;
-  const songName = match[1];
-
-  try {
-    const lyrics = await getLyrics(songName);
-    if (lyrics) {
-      bot.sendMessage(chatId, `Lyrics for "${songName}":\n${lyrics}`);
-    } else {
-      bot.sendMessage(chatId, `Lyrics for "${songName}" not found.`);
-    }
-  } catch (error) {
-    console.error("Error fetching lyrics:", error);
-    bot.sendMessage(chatId, "Error fetching lyrics. Please try again later.");
-  }
-});
-
 const getLyrics = async (songName) => {
   try {
     const lyrics = await lyricsFinder(songName);
