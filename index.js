@@ -8,8 +8,7 @@ const bot = new TelegramBot(TELEGRAM_BOT, { polling: true });
 const help = `
 /start - 👋  Start to bot
 /help -🐰 Help section
-/weather - 🌦️ Weather in Yaounde
-/lyrics - 🎶 Lyrics`;
+/weather - 🌦️ Weather in Yaounde`;
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
