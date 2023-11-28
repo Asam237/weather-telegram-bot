@@ -1,6 +1,5 @@
 import TelegramBot from "node-telegram-bot-api";
 import { TELEGRAM_BOT, WEATHER_BOT } from "./shared/core/config.js";
-import lyricsFinder from 'lyrics-finder';
 import axios from "axios";
 
 const bot = new TelegramBot(TELEGRAM_BOT, { polling: true });
