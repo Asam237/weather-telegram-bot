@@ -39,7 +39,7 @@ bot.onText(/\/weather/, async (msg) => {
       response.data.weather[0].description;
     bot.sendMessage(chatId, data);
   } catch (error) {
-    console.error("Error fetching:", error.message);
+    console.error("Error fetching: ", error.message);
     bot.sendMessage(
       chatId,
       "Sorry, an error occurred while fetching."
