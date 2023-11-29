@@ -34,7 +34,7 @@ bot.onText(/\/weather/, async (msg) => {
       response.data.name +
       "\nTemperature: " +
       response.data.main.temp +
-      " °C\nDescription: " +
+      "°C\nDescription: " +
       response.data.weather[0].description;
     bot.sendMessage(chatId, data);
   } catch (error) {
